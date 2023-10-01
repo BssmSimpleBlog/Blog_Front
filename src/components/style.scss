@@ -1,3 +1,68 @@
 .profile {
   background-color: yellow;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  background-color: rgb(36, 36, 168);
+  h2 {
+    margin-left: 40px;
+  }
+  h2,
+  h4,
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  .auth {
+    display: flex;
+    margin-right: 80px;
+    h4 {
+      margin: 10px;
+    }
+  }
+}
+
+.register {
+  text-align: center;
+  .container {
+    height: 90vh;
+    width: 400px;
+    background-color: rgb(189, 229, 245);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 35px;
+    h2 {
+      padding: 40px;
+      color: rgb(36, 36, 168);
+      text-align: center;
+    }
+    .values {
+      .value {
+        padding: 10px;
+        input {
+          width: 250px;
+          height: 45px;
+        }
+      }
+    }
+    .sign {
+      margin-top: 100px;
+      button {
+        margin: 10px;
+        width: 150px;
+        height: 50px;
+        border-radius: 10px;
+        border: none;
+      }
+      .up {
+        background-color: rgb(106, 138, 255);
+      }
+    }
+  }
+}

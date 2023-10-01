@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
+import Header from "../components/Header/Header";
 
 const Login = () => {
-    return (
-        <div>
-            로그인페이지입니다
-        </div>
-    );
+  return (
+    <div>
+      <Header />
+      로그인이다
+    </div>
+  );
 };
 
 export default Login;

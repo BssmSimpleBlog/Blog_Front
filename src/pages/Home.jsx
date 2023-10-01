@@ -1,8 +1,13 @@
 import React from "react";
 import "./style.scss";
+import Header from "../components/Header/Header";
 
 const Home = () => {
-  return <div>홈화면이다</div>;
+  return (
+    <div className="home">
+      <Header />
+    </div>
+  );
 };
 
 export default Home;
