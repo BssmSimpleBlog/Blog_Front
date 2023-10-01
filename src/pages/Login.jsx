@@ -24,6 +24,11 @@ const Login = () => {
 
   const [formData, setFormData] = useState(initialFormData);
 
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
   const handleSubmit = () => {
     axios
       .post(
@@ -50,6 +55,7 @@ const Login = () => {
         <div className="values">
           <div className="value">
             <input
+              onKeyDown={activeEnter}
               type="text"
               placeholder="아이디"
               onChange={(e) => {
@@ -62,6 +68,7 @@ const Login = () => {
           </div>
           <div className="value">
             <input
+              onKeyDown={activeEnter}
               type="password"
               placeholder="비밀번호"
               onChange={(e) => {

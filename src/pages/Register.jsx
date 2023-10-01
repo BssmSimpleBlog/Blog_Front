@@ -22,6 +22,12 @@ const Register = () => {
 
   const [formData, setFormData] = useState(initialFormData);
 
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
   const handleSubmit = () =>
     axios
       .post(
@@ -29,9 +35,13 @@ const Register = () => {
         formData,
         { headers }
       )
-      .then(() => {
-        alert("회원가입 성공");
-        history("/");
+      .then((res) => {
+        if (res.data.error) {
+          alert(res.data.error);
+        } else {
+          alert("회원가입 성공");
+          history("/auth/login");
+        }
       });
 
   return (
@@ -42,6 +52,7 @@ const Register = () => {
         <div className="values">
           <div className="value">
             <input
+              onKeyDown={activeEnter}
               type="text"
               placeholder="아이디"
               onChange={(e) => {
@@ -54,6 +65,7 @@ const Register = () => {
           </div>
           <div className="value">
             <input
+              onKeyDown={activeEnter}
               type="password"
               placeholder="비밀번호"
               onChange={(e) => {
@@ -66,6 +78,7 @@ const Register = () => {
           </div>
           <div className="value">
             <input
+              onKeyDown={activeEnter}
               type="email"
               placeholder="이메일"
               onChange={(e) => {
@@ -78,6 +91,7 @@ const Register = () => {
           </div>
           <div className="value">
             <input
+              onKeyDown={activeEnter}
               type="text"
               placeholder="닉네임"
               onChange={(e) => {
@@ -93,7 +107,6 @@ const Register = () => {
           <button onClick={handleSubmit} className="up">
             회원가입
           </button>
-          <button>로그인</button>
         </div>
       </div>
     </div>
