@@ -1,11 +1,9 @@
 import { Suspense, lazy } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 
-import LoadingScreen from "../pages/LoadingScreen";
-
 const Loadable = (Component) => (props) => {
   return (
-    <Suspense fallback={<LoadingScreen />}>
+    <Suspense fallback={<Loading />}>
       <Component {...props} />
     </Suspense>
   );
@@ -24,11 +22,7 @@ export default function Router() {
       path: "/",
       children: [
         { path: "/", element: <Home /> },
-        { path: "/explore", element: <Explore /> },
-        { path: "/reels", element: <Reels /> },
-        { path: "/message", element: <Message /> },
-        { path: "/profile", element: <Profile /> },
-        { path: "/loading", element: <Loading /> },
+        { path: "post", element: <Post /> },
         { path: "404", element: <Page404 /> },
         { path: "*", element: <Navigate to="/404" replace /> },
       ],
@@ -40,15 +34,10 @@ export default function Router() {
 const Home = Loadable(lazy(() => import("../pages/Home")));
 
 //Pages
-const Explore = Loadable(lazy(() => import("../pages/Explore")));
 
-const Reels = Loadable(lazy(() => import("../pages/Reels")));
+const Post = Loadable(lazy(() => import("../pages/Post")));
 
-const Message = Loadable(lazy(() => import("../pages/Message")));
-
-const Profile = Loadable(lazy(() => import("../pages/Profile")));
-
-const Loading = Loadable(lazy(() => import("../pages/LoadingScreen")));
+const Loading = Loadable(lazy(() => import("../pages/Loading")));
 
 const Page404 = Loadable(lazy(() => import("../pages/Page404")));
 
