@@ -30,7 +30,7 @@ const Register = () => {
         { headers }
       )
       .then(() => {
-        alert('정상적으로 회원가입되었습니다.')
+        alert("회원가입 성공");
         history("/");
       });
 
