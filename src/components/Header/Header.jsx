@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "../style.scss";
 import { Link } from "react-router-dom";
+import Profile from "../Modals/Profile";
 
 const Header = () => {
+  const [isModal, setIsModal] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("accessToken")
+  );
   const logout = () => {
     localStorage.removeItem("accessToken");
-    window.location.reload();
+    setIsLoggedIn(false);
   };
   return (
     <div className="header">
@@ -23,9 +29,18 @@ const Header = () => {
             </Link>
           </>
         ) : (
-          <h4 onClick={logout}>로그아웃</h4>
+          <>
+            <h4 onClick={logout}>로그아웃</h4>
+            <h4
+              onClick={() => {
+                setIsModal(true);
+              }}
+            >
+              프로필 수정
+            </h4>
+          </>
         )}
-        <h4>프로필 수정</h4>
+        <Profile isModal={isModal} setIsModal={setIsModal} />
       </div>
     </div>
   );
