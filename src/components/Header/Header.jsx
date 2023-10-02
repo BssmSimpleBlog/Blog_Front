@@ -11,6 +11,7 @@ const Header = () => {
   );
   const logout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("userid");
     setIsLoggedIn(false);
   };
   return (

@@ -41,6 +41,7 @@ const Login = () => {
           alert(res.data.error);
         } else {
           localStorage.setItem("accessToken", res.data.token);
+          localStorage.setItem("userid", res.data.userid);
           alert("로그인 성공");
           history("/");
         }
