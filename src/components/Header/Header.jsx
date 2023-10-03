@@ -34,7 +34,7 @@ const Header = () => {
           </>
         ) : (
           <>
-            <h4 style={{ cursor: "default" }}>{nickname}</h4>
+            <h4 style={{ cursor: "default" , color: "rgb(36, 36, 168)"}}>{nickname}</h4>
             <h4 onClick={logout}>로그아웃</h4>
             <h4
               onClick={() => {
