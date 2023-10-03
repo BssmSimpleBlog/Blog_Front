@@ -16,6 +16,7 @@ const Home = () => {
   return (
     <div className="home">
       <Header />
+      <Post />
       <img src="../../img/pen.png" className="write" />
     </div>
   );
