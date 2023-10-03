@@ -12,8 +12,11 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userid");
+    localStorage.removeItem("nickname");
     setIsLoggedIn(false);
   };
+
+  const nickname = localStorage.getItem("nickname");
   return (
     <div className="header">
       <Link to="/">
@@ -31,6 +34,7 @@ const Header = () => {
           </>
         ) : (
           <>
+            <h4 style={{ cursor: "default" }}>{nickname}</h4>
             <h4 onClick={logout}>로그아웃</h4>
             <h4
               onClick={() => {
@@ -41,7 +45,7 @@ const Header = () => {
             </h4>
           </>
         )}
-        <Profile isModal={isModal} setIsModal={setIsModal} />
+        <Profile isModal={isModal} setIsModal={setIsModal} logout={logout} />
       </div>
     </div>
   );

@@ -3,8 +3,9 @@ import "../style.scss";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ProfileDelete from "./profileDelete";
 
-const Profile = ({ isModal, setIsModal }) => {
+const Profile = ({ isModal, setIsModal, logout }) => {
   const history = useNavigate();
   const handleModalClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -26,6 +27,7 @@ const Profile = ({ isModal, setIsModal }) => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const handleUpdate = () => {
     axios
@@ -40,10 +42,10 @@ const Profile = ({ isModal, setIsModal }) => {
         } else {
           alert("프로필 수정 성공");
           setIsModal(false);
+          logout();
         }
       });
   };
-  
 
   return (
     <div className="modal">
@@ -75,7 +77,13 @@ const Profile = ({ isModal, setIsModal }) => {
                 />
               </div>
               <div className="buttons">
-                <button className="delete" onClick={handleDelete}>
+                <button
+                  className="delete"
+                  onClick={() => {
+                    setDeleteModal(true);
+                    setIsModal(false);
+                  }}
+                >
                   계정 삭제
                 </button>
                 <button className="update" onClick={handleUpdate}>
@@ -85,6 +93,14 @@ const Profile = ({ isModal, setIsModal }) => {
             </div>
           </div>
         </div>
+      ) : null}
+
+      {deleteModal ? (
+        <ProfileDelete
+          setDeleteModal={setDeleteModal}
+          setIsModal={setIsModal}
+          logout={logout}
+        />
       ) : null}
     </div>
   );
