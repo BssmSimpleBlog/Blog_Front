@@ -92,74 +92,7 @@
   }
 }
 
-.post {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-  .container {
-    background-color: #eee;
-    width: 500px;
-    height: 500px;
-    border-radius: 10px;
-    .inputs {
-      .title {
-        width: 100%;
-        height: 50px;
-        border: none;
-        border-top-right-radius: 10px;
-        border-top-left-radius: 10px;
-        border-bottom: 1px solid black;
-        font-size: 27px;
-        &::placeholder {
-          padding-left: 10px;
-        }
-        &:focus {
-          outline: none;
-        }
-      }
-      .description {
-        width: 100%;
-        height: 380px;
-        border: none;
-        font-size: 15px;
-        resize: none;
-        overflow: hidden;
-        &::placeholder {
-          padding-left: 10px;
-        }
-        &:focus {
-          outline: none;
-        }
-      }
-    }
-    .buttons {
-      float: right;
-      button {
-        margin-top: 10px;
-        margin-right: 15px;
-        width: 100px;
-        height: 40px;
-        cursor: pointer;
-        border-radius: 5px;
-        border: none;
-      }
-      .cancel {
-        background-color: red;
-        color: white;
-      }
-      .submit {
-        background-color: rgb(133, 243, 133);
-      }
-    }
-  }
-}
+
 
 .write {
   width: 60px;

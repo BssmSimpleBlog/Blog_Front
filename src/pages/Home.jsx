@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
-import Post from "../components/Modals/Post";
+import Create from "../components/Modals/Create";
 
 const Home = () => {
   const history = useNavigate();
@@ -27,7 +27,7 @@ const Home = () => {
       />
 
       {isPostModalOpen && (
-        <Post
+        <Create
           onClose={() => {
             setIsPostModalOpen(false);
           }}
