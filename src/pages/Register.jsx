@@ -23,7 +23,7 @@ const Register = () => {
 
   const [formData, setFormData] = useState(initialFormData);
 
-  // State variables to hold validation errors
+  
   const [useridError, setUseridError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
