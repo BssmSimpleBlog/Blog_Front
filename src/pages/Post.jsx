@@ -6,6 +6,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Post = () => {
+  const headers = {
+    Authorization:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJSZWFsVGVzdCIsImlhdCI6MTY5NjE0ODE2NX0.InlDLaYQGlpRb_bkTxqxDspqBkWork2JYWOks4GNxNk",
+    Accept: "application/json",
+  };
   const history = useNavigate();
   const location = useLocation();
   const postId = location.pathname.split("/")[2];
@@ -42,6 +47,33 @@ const Post = () => {
 
   const Rposts = [...posts].reverse();
 
+  const userid = localStorage.getItem("userid");
+  const initialFormData = {
+    id: postId,
+    userid: userid,
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+
+  const handleDelete = () => {
+    if (window.confirm("진짜 삭제하시겠습니까?")) {
+      axios
+        .delete(
+          `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`,
+          { headers, data: formData }
+        )
+        .then((res) => {
+          if (res.data.error) {
+            alert(res.data.error);
+          } else {
+            alert("글이 삭제되었습니다.");
+            history("/");
+          }
+        });
+    }
+  };
+  const handleUpdate = () => {};
+
   return (
     <>
       <Header />
@@ -50,6 +82,16 @@ const Post = () => {
           <p className="title">{post.title}</p>
           <p className="nickname">{post.nickname}</p>
           <p className="date">{String(post.updatedAt).substring(0, 10)}</p>
+          {localStorage.getItem("userid") == post.userid ? (
+            <>
+              <button className="update" onClick={handleUpdate}>
+                수정
+              </button>
+              <button className="delete" onClick={handleDelete}>
+                삭제
+              </button>
+            </>
+          ) : null}
           <p className="description">{post.desc}</p>
         </div>
         <div className="others">
