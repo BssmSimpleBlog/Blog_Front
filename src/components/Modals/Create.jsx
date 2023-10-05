@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "../style.scss";
 
@@ -22,6 +22,15 @@ const Create = ({ onClose }) => {
 
   const handleSubmit = () => {
     if (isSubmitting) return;
+    if (formData.title.length < 3) {
+      alert("제목은 3글자 이상이어야 합니다.");
+      return;
+    }
+
+    if (formData.desc.trim() === "") {
+      alert("본문을 입력하세요.");
+      return;
+    }
 
     setIsSubmitting(true);
     axios

@@ -3,10 +3,15 @@ import "./style.scss";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import Create from "../components/Modals/Create";
+import Articles from "../components/Articles/Articles";
 
 const Home = () => {
   const history = useNavigate();
-
+  const headers = {
+    Authorization:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJSZWFsVGVzdCIsImlhdCI6MTY5NjE0ODE2NX0.InlDLaYQGlpRb_bkTxqxDspqBkWork2JYWOks4GNxNk",
+    Accept: "application/json",
+  };
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   useEffect(() => {
@@ -26,6 +31,8 @@ const Home = () => {
         }}
       />
 
+      <Articles />
+
       {isPostModalOpen && (
         <Create
           onClose={() => {
@@ -33,7 +40,6 @@ const Home = () => {
           }}
         />
       )}
-      {/* TODO 글 작성되있는거 띄우기 */}
     </div>
   );
 };

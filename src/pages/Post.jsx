@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const Post = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  return <div className="post">
+    
+  </div>;
 };
 
 export default Post;
