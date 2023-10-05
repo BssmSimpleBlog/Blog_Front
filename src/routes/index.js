@@ -24,7 +24,7 @@ export default function Router() {
       path: "/",
       children: [
         { path: "/", element: <Home /> },
-        { path: "post", element: <Post /> },
+        { path: "post/:id", element: <Post /> },
         { path: "404", element: <Page404 /> },
         { path: "*", element: <Navigate to="/404" replace /> },
       ],

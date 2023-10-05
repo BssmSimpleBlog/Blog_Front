@@ -186,6 +186,11 @@
     width: 100%;
     border-collapse: collapse;
 
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
     th,
     td {
       padding: 10px;
@@ -194,11 +199,20 @@
 
     th {
       background-color: #f2f2f2;
-      font-weight: bold;
+      border-bottom: 3px solid grey;
     }
 
     td {
       background-color: #fff;
+      border-bottom: 1px solid black;
+    }
+    tbody {
+      cursor: pointer;
+    }
+    tr:hover {
+      td {
+        background-color: #faffaf;
+      }
     }
 
     .number {
@@ -206,19 +220,15 @@
     }
 
     .title {
-      width: 50%;
+      width: 55%;
     }
 
     .author {
-      width: 10%;
+      width: 15%;
     }
 
     .date {
       width: 15%;
-    }
-
-    .recommendation {
-      width: 10%;
     }
   }
 }

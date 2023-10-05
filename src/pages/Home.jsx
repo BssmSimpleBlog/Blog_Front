@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
+import "../components/style.scss";
 import Header from "../components/Header/Header";
-import { useNavigate } from "react-router-dom";
 import Create from "../components/Modals/Create";
-import Articles from "../components/Articles/Articles";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const history = useNavigate();
-  const headers = {
-    Authorization:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJSZWFsVGVzdCIsImlhdCI6MTY5NjE0ODE2NX0.InlDLaYQGlpRb_bkTxqxDspqBkWork2JYWOks4GNxNk",
-    Accept: "application/json",
-  };
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      history("/");
-    }
-  }, [history]);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          "https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/"
+        );
+        setPosts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  });
+
+  const Rposts = [...posts].reverse();
 
   return (
     <div className="home">
@@ -30,9 +37,33 @@ const Home = () => {
           setIsPostModalOpen(true);
         }}
       />
-
-      <Articles />
-
+      <div className="posts">
+        <table className="posts-list">
+          <thead>
+            <tr>
+              <th className="number">번호</th>
+              <th className="title">제목</th>
+              <th className="author">글쓴이</th>
+              <th className="date">작성일</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Rposts.map((post) => (
+              <tr
+                key={post.id}
+                onClick={() => {
+                  history(`/post/${post.id}`);
+                }}
+              >
+                <td>{post.id}</td>
+                <td>{post.title}</td>
+                <td>{post.nickname}</td>
+                <td>{post.updatedAt.substring(0, 10)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {isPostModalOpen && (
         <Create
           onClose={() => {

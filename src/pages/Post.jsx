@@ -1,7 +1,6 @@
 import React from "react";
 import "./style.scss";
 import Header from "../components/Header/Header";
-import Articles from "../components/Articles/Articles";
 
 const Post = () => {
   return (
@@ -42,7 +41,6 @@ const Post = () => {
           </p>
         </div>
         <div className="others">
-          <Articles />
         </div>
       </div>
     </>
