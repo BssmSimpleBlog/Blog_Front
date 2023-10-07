@@ -4,6 +4,7 @@ import Header from "../components/Header/Header";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Create from "../components/Modals/Create";
 
 const Post = () => {
   const headers = {
@@ -72,7 +73,10 @@ const Post = () => {
         });
     }
   };
-  const handleUpdate = () => {};
+
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [createModalMode, setCreateModalMode] = useState("");
+  const [selectedPost, setSelectedPost] = useState({});
 
   return (
     <>
@@ -84,7 +88,14 @@ const Post = () => {
           <p className="date">{String(post.updatedAt).substring(0, 10)}</p>
           {localStorage.getItem("userid") == post.userid ? (
             <>
-              <button className="update" onClick={handleUpdate}>
+              <button
+                className="update"
+                onClick={() => {
+                  setIsPostModalOpen(true);
+                  setCreateModalMode("edit");
+                  setSelectedPost(post);
+                }}
+              >
                 수정
               </button>
               <button className="delete" onClick={handleDelete}>
@@ -94,6 +105,16 @@ const Post = () => {
           ) : null}
           <p className="description">{post.desc}</p>
         </div>
+        {isPostModalOpen && (
+          <Create
+            onClose={() => {
+              setIsPostModalOpen(false);
+            }}
+            post={post}
+            postId={postId}
+            createModalMode={createModalMode}
+          />
+        )}
         <div className="others">
           <div className="posts">
             <table className="posts-list">
