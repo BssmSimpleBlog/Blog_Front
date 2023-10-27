@@ -16,6 +16,7 @@ const Login = () => {
     Authorization:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJSZWFsVGVzdCIsImlhdCI6MTY5NjE0ODE2NX0.InlDLaYQGlpRb_bkTxqxDspqBkWork2JYWOks4GNxNk",
     Accept: "application/json",
+		credentials: true
   };
 
   const initialFormData = {
