@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header/Header";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const Login = () => {
@@ -31,19 +32,29 @@ const Login = () => {
   };
   const handleSubmit = () => {
     axios
-      .post(
-        "https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/auth/login",
-        formData,
-        { headers }
-      )
+      .post("https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/auth/login", formData, { headers })
       .then((res) => {
         if (res.data.error) {
-          alert(res.data.error);
+          Swal.fire({
+            icon: "error",
+            title: res.data.error,
+            showConfirmButton: false,
+            timer: 1500,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          });
         } else {
           localStorage.setItem("accessToken", res.data.token);
           localStorage.setItem("userid", res.data.userid);
           localStorage.setItem("nickname", res.data.nickname);
-          alert("로그인 성공");
+          Swal.fire({
+            icon: "success",
+            title: "로그인을 성공했습니다!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           history("/");
         }
       });
@@ -66,6 +77,7 @@ const Login = () => {
                   userid: e.target.value,
                 });
               }}
+              autoFocus
             />
           </div>
           <div className="value">

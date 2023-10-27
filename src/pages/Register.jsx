@@ -3,6 +3,7 @@ import "./style.scss";
 import Header from "../components/Header/Header";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import * as Yup from "yup";
 
 const Register = () => {
@@ -23,7 +24,6 @@ const Register = () => {
 
   const [formData, setFormData] = useState(initialFormData);
 
-  
   const [useridError, setUseridError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -67,16 +67,17 @@ const Register = () => {
       .validate(formData, { abortEarly: false })
       .then(() => {
         axios
-          .post(
-            "https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/auth/",
-            formData,
-            { headers }
-          )
+          .post("https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/auth/", formData, { headers })
           .then((res) => {
             if (res.data.error) {
               alert(res.data.error);
             } else {
-              alert("회원가입 성공");
+              Swal.fire({
+                icon: "success",
+                title: res.data,
+                showConfirmButton: false,
+                timer: 1500,
+              });
               history("/auth/login");
             }
           })
@@ -124,6 +125,7 @@ const Register = () => {
                 });
                 setUseridError("");
               }}
+              autoFocus
             />
             {useridError && <div className="error">{useridError}</div>}
           </div>

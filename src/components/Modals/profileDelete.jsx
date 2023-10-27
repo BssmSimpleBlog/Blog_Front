@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../style.scss";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const ProfileDelete = ({ setDeleteModal, logout }) => {
@@ -26,7 +27,16 @@ const ProfileDelete = ({ setDeleteModal, logout }) => {
         if (res.data.error) {
           alert(res.data.error);
         } else {
-          alert("계정 삭제 성공");
+          Swal.fire({
+            icon: "success",
+            title: "계정 삭제를 성공했습니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          });
           setDeleteModal(false);
           logout();
         }

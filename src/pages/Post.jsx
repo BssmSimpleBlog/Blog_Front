@@ -21,9 +21,7 @@ const Post = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/"
-        );
+        const res = await axios.get("https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/");
         setPosts(res.data);
       } catch (err) {
         console.log(err);
@@ -35,9 +33,7 @@ const Post = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`
-        );
+        const res = await axios.get(`https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`);
         setPost(res.data);
       } catch (err) {
         console.log(err);
@@ -59,10 +55,10 @@ const Post = () => {
   const handleDelete = () => {
     if (window.confirm("진짜 삭제하시겠습니까?")) {
       axios
-        .delete(
-          `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`,
-          { headers, data: formData }
-        )
+        .delete(`https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`, {
+          headers,
+          data: formData,
+        })
         .then((res) => {
           if (res.data.error) {
             alert(res.data.error);

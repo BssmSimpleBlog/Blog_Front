@@ -1,20 +1,22 @@
-import React, { useId } from "react";
-import "../style.scss";
-import { useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import * as Yup from "yup";
 import ProfileDelete from "./profileDelete";
+import "../style.scss";
 
 const Profile = ({ isModal, setIsModal, logout }) => {
   const history = useNavigate();
+
   const handleModalClick = (e) => {
     if (e.target === e.currentTarget) {
       setIsModal(false);
     }
   };
+
   const headers = {
-    Authorization:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJSZWFsVGVzdCIsImlhdCI6MTY5NjE0ODE2NX0.InlDLaYQGlpRb_bkTxqxDspqBkWork2JYWOks4GNxNk",
+    Authorization: "Your_Auth_Header_Here",
     Accept: "application/json",
   };
 
@@ -26,24 +28,51 @@ const Profile = ({ isModal, setIsModal, logout }) => {
     nickname: "",
   };
 
+  const [passwordError, setPasswordError] = useState("");
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .max(25, "비밀번호는 최대 25자리 이하여야 합니다.")
+      .matches(
+        /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[^\s]*$/,
+        "알파벳, 숫자, 특수문자를 모두 포함해야 합니다!"
+      )
+      .required("비밀번호를 입력하세요"),
+  });
+
   const [formData, setFormData] = useState(initialFormData);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const handleUpdate = () => {
-    axios
-      .put(
-        `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/auth/${userid}`,
-        formData,
-        { headers }
-      )
-      .then((res) => {
-        if (res.data.error) {
-          alert(res.data.error);
-        } else {
-          alert("프로필 수정 성공");
-          setIsModal(false);
-          logout();
-        }
+    validationSchema
+      .validate(formData, { abortEarly: false })
+      .then(() => {
+        axios
+          .put(`https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/auth/${userid}`, formData, { headers })
+          .then((res) => {
+            if (res.data.error) {
+              alert(res.data.error);
+            } else {
+              Swal.fire({
+                icon: "success",
+                title: "프로필 수정을 성공했습니다!",
+                showConfirmButton: false,
+                timer: 1500,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.reload();
+                }
+              });
+              logout();
+            }
+          });
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "프로필 수정을 실패했습니다!",
+          showConfirmButton: false,
+          timer: 3000,
+        });
       });
   };
 
@@ -64,6 +93,7 @@ const Profile = ({ isModal, setIsModal, logout }) => {
                       password: e.target.value,
                     });
                   }}
+                  autoFocus
                 />
                 <h4>닉네임</h4>
                 <input

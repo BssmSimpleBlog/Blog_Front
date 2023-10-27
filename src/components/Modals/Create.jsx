@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import axios from "axios";
 import "../style.scss";
 
@@ -21,18 +22,19 @@ const Create = ({ onClose, createModalMode, postId }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    if (!postId) return;
     axios
-      .get(
-        `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`,
-        { headers }
-      )
+      .get(`https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`, { headers })
       .then((res) => {
         setFormData({
           title: res.data.title,
           desc: res.data.desc,
         });
+      })
+      .catch((error) => {
+        console.error("오류 발생:", error);
       });
-  }, []);
+  }, [postId]);
 
   const handleEdit = () => {
     if (isSubmitting) return;
@@ -57,8 +59,15 @@ const Create = ({ onClose, createModalMode, postId }) => {
         },
         { headers }
       )
-      .then(() => {
-        alert("글 수정 성공");
+      .then((res) => {
+        Swal.fire({
+          icon: "success",
+          title: res.data,
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          window.location.reload();
+        });
         onClose();
       });
   };
@@ -76,17 +85,20 @@ const Create = ({ onClose, createModalMode, postId }) => {
     }
     setIsSubmitting(true);
     axios
-      .post(
-        "https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/",
-        formData,
-        { headers }
-      )
+      .post("https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/", formData, { headers })
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);
         } else {
           onClose();
-          alert(res.data);
+          Swal.fire({
+            icon: "success",
+            title: res.data,
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            window.location.reload();
+          });
         }
       })
       .finally(() => {
