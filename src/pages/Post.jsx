@@ -67,7 +67,7 @@ const Post = () => {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "rgb(133, 243, 133)",
-      cancelButtonColor: red,
+      cancelButtonColor: "red",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
