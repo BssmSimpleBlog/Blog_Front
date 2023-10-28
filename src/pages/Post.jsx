@@ -125,7 +125,7 @@ const Post = () => {
               >
                 수정
               </button>
-              {localStorage.getItem("userid") == "admin12345" ? (
+              {localStorage.getItem("userid") == post.userid ? (
                 <button className="delete" onClick={handleDelete}>
                   삭제
                 </button>
