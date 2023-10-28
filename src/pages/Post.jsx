@@ -83,11 +83,13 @@ const Post = () => {
               Swal.fire({
                 title: res.data.error,
                 timer: 1000,
+                type: "error",
               });
             } else {
               Swal.fire({
                 title: "글이 삭제되었습니다.",
                 timer: 1000,
+                type: "success",
               });
               history("/");
             }
