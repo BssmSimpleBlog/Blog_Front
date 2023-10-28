@@ -81,7 +81,7 @@ const Post = () => {
         <div className="this">
           <p className="title">{post.title}</p>
           <p className="nickname">{post.nickname}</p>
-          <p className="date">{String(post.updatedAt).substring(0, 10)}</p>
+          <p className="date">마지막 수정: {String(post.updatedAt).substring(0, 10)}</p>
           {localStorage.getItem("userid") == post.userid ? (
             <>
               <button
@@ -133,7 +133,7 @@ const Post = () => {
                     <td>{post.id}</td>
                     <td>{post.title}</td>
                     <td>{post.nickname}</td>
-                    <td>마지막 수정: {post.updatedAt.substring(0, 10)}</td>
+                    <td>{post.createdAt.substring(0, 10)}</td>
                   </tr>
                 ))}
               </tbody>
