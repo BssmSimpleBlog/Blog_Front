@@ -4,6 +4,7 @@ import Header from "../components/Header/Header";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import Create from "../components/Modals/Create";
 
 const Post = () => {
@@ -21,7 +22,9 @@ const Post = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/");
+        const res = await axios.get(
+          "https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/"
+        );
         setPosts(res.data);
       } catch (err) {
         console.log(err);
@@ -33,10 +36,16 @@ const Post = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`);
+        const res = await axios.get(
+          `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`
+        );
         setPost(res.data);
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          title: err,
+          timer: 1000,
+          type: "error",
+        });
       }
     };
     fetchData();
@@ -53,21 +62,38 @@ const Post = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const handleDelete = () => {
-    if (window.confirm("진짜 삭제하시겠습니까?")) {
-      axios
-        .delete(`https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`, {
-          headers,
-          data: formData,
-        })
-        .then((res) => {
-          if (res.data.error) {
-            alert(res.data.error);
-          } else {
-            alert("글이 삭제되었습니다.");
-            history("/");
-          }
-        });
-    }
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(133, 243, 133)",
+      cancelButtonColor: red,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(
+            `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`,
+            {
+              headers,
+              data: formData,
+            }
+          )
+          .then((res) => {
+            if (res.data.error) {
+              Swal.fire({
+                title: res.data.error,
+                timer: 1000,
+              });
+            } else {
+              Swal.fire({
+                title: "글이 삭제되었습니다.",
+                timer: 1000,
+              });
+              history("/");
+            }
+          });
+      }
+    });
   };
 
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
@@ -81,7 +107,9 @@ const Post = () => {
         <div className="this">
           <p className="title">{post.title}</p>
           <p className="nickname">작성자: {post.nickname}</p>
-          <p className="date">마지막 수정: {String(post.updatedAt).substring(0, 10)}</p>
+          <p className="date">
+            마지막 수정: {String(post.updatedAt).substring(0, 10)}
+          </p>
           {localStorage.getItem("userid") == post.userid ? (
             <>
               <button
