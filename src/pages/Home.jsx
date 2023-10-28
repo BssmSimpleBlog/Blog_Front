@@ -58,7 +58,7 @@ const Home = () => {
                 <td>{post.id}</td>
                 <td>{post.title}</td>
                 <td>{post.nickname}</td>
-                <td>{post.updatedAt.substring(0, 10)}</td>
+                <td>{post.createdAt.substring(0, 10)}</td>
               </tr>
             ))}
           </tbody>

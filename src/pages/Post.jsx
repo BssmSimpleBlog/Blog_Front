@@ -133,7 +133,7 @@ const Post = () => {
                     <td>{post.id}</td>
                     <td>{post.title}</td>
                     <td>{post.nickname}</td>
-                    <td>{post.updatedAt.substring(0, 10)}</td>
+                    <td>마지막 수정: {post.updatedAt.substring(0, 10)}</td>
                   </tr>
                 ))}
               </tbody>
