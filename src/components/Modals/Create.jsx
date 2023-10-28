@@ -24,7 +24,10 @@ const Create = ({ onClose, createModalMode, postId }) => {
   useEffect(() => {
     if (!postId) return;
     axios
-      .get(`https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`, { headers })
+      .get(
+        `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/${postId}`,
+        { headers }
+      )
       .then((res) => {
         setFormData({
           title: res.data.title,
@@ -38,15 +41,30 @@ const Create = ({ onClose, createModalMode, postId }) => {
 
   const handleEdit = () => {
     if (isSubmitting) return;
+
     if (formData.title.length < 3) {
-      alert("제목은 3글자 이상이어야 합니다.");
+      Swal.fire({
+        title: "제목은 3글자 이상이어야 합니다.",
+        timer: 1000,
+      });
+      return;
+    }
+    else if (formData.title.length > 20) {
+      Swal.fire({
+        title: "제목은 20글자 이하여야 합니다.",
+        timer: 1000,
+      });
       return;
     }
 
     if (formData.desc.trim() === "") {
-      alert("본문을 입력하세요.");
+      Swal.fire({
+        title: "본문을 입력해주세요.",
+        timer: 1000,
+      });
       return;
     }
+
     setIsSubmitting(true);
     axios
       .put(
@@ -75,17 +93,26 @@ const Create = ({ onClose, createModalMode, postId }) => {
   const handleSubmit = () => {
     if (isSubmitting) return;
     if (formData.title.length < 3) {
-      alert("제목은 3글자 이상이어야 합니다.");
+      Swal.fire({
+        title: "제목은 3글자 이상이어야 합니다.",
+        timer: 1000,
+      });
+      return;
+    } else if (formData.desc.trim() === "") {
+      Swal.fire({
+        title: "본문을 입력해주세요.",
+        timer: 1000,
+      });
       return;
     }
 
-    if (formData.desc.trim() === "") {
-      alert("본문을 입력하세요.");
-      return;
-    }
     setIsSubmitting(true);
     axios
-      .post("https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/", formData, { headers })
+      .post(
+        "https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/",
+        formData,
+        { headers }
+      )
       .then((res) => {
         if (res.data.error) {
           alert(res.data.error);
