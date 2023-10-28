@@ -80,7 +80,7 @@ const Post = () => {
       <div className="post">
         <div className="this">
           <p className="title">{post.title}</p>
-          <p className="nickname">{post.nickname}</p>
+          <p className="nickname">작성자: {post.nickname}</p>
           <p className="date">마지막 수정: {String(post.updatedAt).substring(0, 10)}</p>
           {localStorage.getItem("userid") == post.userid ? (
             <>

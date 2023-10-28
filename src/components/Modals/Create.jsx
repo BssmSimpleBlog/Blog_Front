@@ -48,10 +48,9 @@ const Create = ({ onClose, createModalMode, postId }) => {
         timer: 1000,
       });
       return;
-    }
-    else if (formData.title.length > 20) {
+    } else if (formData.title.length > 25) {
       Swal.fire({
-        title: "제목은 20글자 이하여야 합니다.",
+        title: "제목은 25글자 이하여야 합니다.",
         timer: 1000,
       });
       return;
@@ -98,7 +97,15 @@ const Create = ({ onClose, createModalMode, postId }) => {
         timer: 1000,
       });
       return;
-    } else if (formData.desc.trim() === "") {
+    } else if (formData.title.length > 25) {
+      Swal.fire({
+        title: "제목은 25글자 이하여야 합니다.",
+        timer: 1000,
+      });
+      return;
+    }
+
+    if (formData.desc.trim() === "") {
       Swal.fire({
         title: "본문을 입력해주세요.",
         timer: 1000,
