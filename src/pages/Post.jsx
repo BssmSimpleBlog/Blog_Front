@@ -90,6 +90,7 @@ const Post = () => {
                 title: "글이 삭제되었습니다.",
                 timer: 1000,
                 type: "success",
+                showConfirmButton: false,
               });
               history("/");
             }
