@@ -130,8 +130,7 @@ const Post = () => {
               </button>
             </>
           ) : null}
-          {localStorage.getItem("userid") == "admin12345" &&
-          !localStorage.getItem("userid") == post.userid ? (
+          {localStorage.getItem("userid") == "admin12345"  && !localStorage.getItem("userid") == post.userid? (
             <>
               <button className="delete" onClick={handleDelete}>
                 삭제
