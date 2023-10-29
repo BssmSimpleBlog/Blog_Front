@@ -111,6 +111,12 @@ const Create = ({ onClose, createModalMode, postId }) => {
         timer: 1000,
       });
       return;
+    } else if (formData.desc.length > 500) {
+      Swal.fire({
+        title: "글자 수는 500글자 이하여야 합니다",
+        timer: 1000,
+      });
+      return;
     }
 
     setIsSubmitting(true);
