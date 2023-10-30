@@ -160,7 +160,7 @@ const Post = () => {
           } else {
             Swal.fire({
               title: "댓글이 추가되었습니다.",
-              timer: 1000,
+              timer: 2000,
               icon: "success",
               showConfirmButton: false,
             });
