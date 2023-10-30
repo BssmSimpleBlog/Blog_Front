@@ -9,8 +9,7 @@ import Create from "../components/Modals/Create";
 
 const Post = () => {
   const headers = {
-    Authorization:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJSZWFsVGVzdCIsImlhdCI6MTY5NjE0ODE2NX0.InlDLaYQGlpRb_bkTxqxDspqBkWork2JYWOks4GNxNk",
+    Authorization: "Your_Auth_Header_Here",
     Accept: "application/json",
   };
   const history = useNavigate();
@@ -163,7 +162,7 @@ const Post = () => {
           }
         })
         .finally(() => {
-          setIsSubmitting(false);
+          setIsSubmitting(false); // 완료 후 상태를 다시 false로 설정
         });
     }
   };
@@ -254,7 +253,11 @@ const Post = () => {
                 setCommentInput(e.target.value);
               }}
             />
-            <button className="Comment_Button" onClick={handleAddComment}>
+            <button
+              className="Comment_Button"
+              onClick={handleAddComment}
+              disabled={isSubmitting}
+            >
               입력
             </button>
           </div>
