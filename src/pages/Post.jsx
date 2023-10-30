@@ -210,6 +210,8 @@ const Post = () => {
     });
   };
 
+  const RComments = [...comments];
+
   return (
     <>
       <Header />
@@ -271,7 +273,7 @@ const Post = () => {
           </div>
 
           <div className="Comments_Container">
-            {comments.map((item) => (
+            {RComments.map((item) => (
               <div className="Comments_Containers" key={item.id}>
                 <div className="Comments_Nickname">{item.nickname}</div>
                 <div className="Comments_Divider"></div>
