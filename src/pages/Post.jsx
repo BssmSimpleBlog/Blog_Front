@@ -157,24 +157,31 @@ const Post = () => {
   };
 
   const handleDeleteComment = (id) => {
-    axios
-      .delete(
-        `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/comment/${id}`,
-        {
-          id: id,
-        }
-      )
-      .then((res) => {
-        Swal.fire({
-          title: "댓글이 삭제되었습니다.",
-          timer: 1000,
-          icon: "success",
-          showConfirmButton: false,
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(133, 243, 133)",
+      cancelButtonColor: "red",
+    }).then(() => {
+      axios
+        .delete(
+          `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/comment/${id}`,
+          {
+            id: id,
+          }
+        )
+        .then((res) => {
+          Swal.fire({
+            title: "댓글이 삭제되었습니다.",
+            timer: 1000,
+            icon: "success",
+            showConfirmButton: false,
+          });
+          window.location.reload();
         });
-        window.location.reload();
-      });
+    });
   };
-
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [createModalMode, setCreateModalMode] = useState("");
   const [selectedPost, setSelectedPost] = useState({});
