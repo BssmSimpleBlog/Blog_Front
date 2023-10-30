@@ -77,7 +77,12 @@ const Register = () => {
 					)
 					.then((res) => {
 						if (res.data.error) {
-							alert(res.data.error);
+              Swal.fire({
+								icon: 'error',
+								title: res.data.error,
+								showConfirmButton: false,
+								timer: 1500,
+							});
 						} else {
 							Swal.fire({
 								icon: 'success',
