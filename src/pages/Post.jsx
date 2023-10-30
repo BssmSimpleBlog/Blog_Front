@@ -18,6 +18,11 @@ const Post = () => {
   const [post, setPost] = useState({});
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
+  const [commentInput, setCommentInput] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [createModalMode, setCreateModalMode] = useState("");
+  const [selectedPost, setSelectedPost] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,8 +51,6 @@ const Post = () => {
     };
     fetchData();
   }, [postId]);
-
-  const RComments = [...comments].reverse();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -115,9 +118,6 @@ const Post = () => {
     });
   };
 
-  const [commentInput, setCommentInput] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const activeEnter = (e) => {
     if (e.key === "Enter") {
       handleAddComment();
@@ -158,8 +158,17 @@ const Post = () => {
             });
             history("/auth/login");
           } else {
+            Swal.fire({
+              title: "댓글이 추가되었습니다.",
+              timer: 1000,
+              icon: "success",
+              showConfirmButton: false,
+            });
             window.location.reload();
           }
+        })
+        .catch((error) => {
+          console.error("댓글 추가 중 오류 발생:", error);
         })
         .finally(() => {
           setIsSubmitting(false); // 완료 후 상태를 다시 false로 설정
@@ -192,15 +201,14 @@ const Post = () => {
           });
           window.location.reload();
         })
+        .catch((error) => {
+          console.error("댓글 삭제 중 오류 발생:", error);
+        })
         .finally(() => {
           setIsSubmitting(false);
         });
     });
   };
-
-  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [createModalMode, setCreateModalMode] = useState("");
-  const [selectedPost, setSelectedPost] = useState({});
 
   return (
     <>
@@ -213,7 +221,7 @@ const Post = () => {
           <p className="date">
             마지막 수정: {String(post.updatedAt).substring(0, 10)}
           </p>
-          {localStorage.getItem("userid") == post.userid ? (
+          {localStorage.getItem("userid") === post.userid ? (
             <>
               <button
                 className="update"
@@ -230,8 +238,8 @@ const Post = () => {
               </button>
             </>
           ) : null}
-          {localStorage.getItem("userid") == "admin12345" &&
-          !localStorage.getItem("userid") == post.userid ? (
+          {localStorage.getItem("userid") === "admin12345" &&
+          !localStorage.getItem("userid") === post.userid ? (
             <>
               <button className="delete" onClick={handleDelete}>
                 삭제
@@ -256,19 +264,19 @@ const Post = () => {
             <button
               className="Comment_Button"
               onClick={handleAddComment}
-              disabled={isSubmitting}
+              disabled={isSubmitting} // isSubmitting 상태에 따라 버튼 활성화/비활성화
             >
               입력
             </button>
           </div>
 
           <div className="Comments_Container">
-            {RComments.map((item) => (
+            {comments.map((item) => (
               <div className="Comments_Containers" key={item.id}>
                 <div className="Comments_Nickname">{item.nickname}</div>
                 <div className="Comments_Divider"></div>
                 <div className="Comments_CommentBody">{item.commentBody}</div>
-                {localStorage.getItem("userid") == item.userid ? (
+                {localStorage.getItem("userid") === item.userid ? (
                   <input
                     type="button"
                     className="Comments_Delete"
@@ -316,7 +324,7 @@ const Post = () => {
                     <td>{post.id}</td>
                     <td>{post.title}</td>
                     <td>{post.nickname}</td>
-                    <td>{post.createdAt.substring(0, 10)}</td>
+                    <td>{String(post.createdAt).substring(0, 10)}</td>
                   </tr>
                 ))}
               </tbody>
