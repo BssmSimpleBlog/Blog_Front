@@ -239,12 +239,14 @@ const Post = () => {
                 <div className="Comments_Nickname">{item.nickname}</div>
                 <div className="Comments_Divider"></div>
                 <div className="Comments_CommentBody">{item.commentBody}</div>
-                <div
-                  className="Comments_Delete"
-                  onClick={handleDeleteComment(item.id)}
-                >
-                  삭제
-                </div>
+                {localStorage.getItem("userid") == item.userid ? (
+                  <div
+                    className="Comments_Delete"
+                    onClick={handleDeleteComment(item.id)}
+                  >
+                    삭제
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>
