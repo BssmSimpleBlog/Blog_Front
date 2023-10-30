@@ -137,7 +137,7 @@ const Post = () => {
             commentBody: commentInput,
             nickname: localStorage.getItem("nickname"),
             postId: postId,
-			userid: localStorage.getItem("userid")
+            userid: localStorage.getItem("userid"),
           },
           { headers }
         )
@@ -243,7 +243,9 @@ const Post = () => {
                 {localStorage.getItem("userid") == item.userid ? (
                   <div
                     className="Comments_Delete"
-                    onClick={handleDeleteComment(item.id)}
+                    onClick={() => {
+                      handleDeleteComment(item.id);
+                    }}
                   >
                     삭제
                   </div>
