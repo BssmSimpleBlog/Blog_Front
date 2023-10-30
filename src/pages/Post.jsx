@@ -66,7 +66,7 @@ const Post = () => {
       }
     };
     fetchData();
-  }, [post]);
+  }, [postId]);
 
   const Rposts = [...posts].reverse();
 
@@ -117,12 +117,19 @@ const Post = () => {
   };
 
   const [commentInput, setCommentInput] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const activeEnter = (e) => {
     if (e.key === "Enter") {
       handleAddComment();
     }
   };
+
   const handleAddComment = () => {
+    if (isSubmitting) {
+      return; // 이미 요청을 보냈으면 추가 요청을 막음
+    }
+
     if (!commentInput) {
       Swal.fire({
         title: "댓글을 작성해주세요",
@@ -130,6 +137,8 @@ const Post = () => {
         type: "error",
       });
     } else {
+      setIsSubmitting(true);
+
       axios
         .post(
           "https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/comment",
@@ -152,11 +161,13 @@ const Post = () => {
           } else {
             window.location.reload();
           }
+        })
+        .finally(() => {
+          setIsSubmitting(false);
         });
     }
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleDeleteComment = (id) => {
     Swal.fire({
       title: "정말 삭제하시겠습니까?",
@@ -187,6 +198,7 @@ const Post = () => {
         });
     });
   };
+
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [createModalMode, setCreateModalMode] = useState("");
   const [selectedPost, setSelectedPost] = useState({});
@@ -249,7 +261,7 @@ const Post = () => {
 
           <div className="Comments_Container">
             {RComments.map((item) => (
-              <div className="Comments_Containers">
+              <div className="Comments_Containers" key={item.id}>
                 <div className="Comments_Nickname">{item.nickname}</div>
                 <div className="Comments_Divider"></div>
                 <div className="Comments_CommentBody">{item.commentBody}</div>
