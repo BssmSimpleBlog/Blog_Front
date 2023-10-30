@@ -171,6 +171,7 @@ const Post = () => {
           icon: "success",
           showConfirmButton: false,
         });
+        window.location.reload();
       });
   };
 
