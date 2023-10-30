@@ -137,6 +137,7 @@ const Post = () => {
             commentBody: commentInput,
             nickname: localStorage.getItem("nickname"),
             postId: postId,
+			userid: localStorage.getItem("userid")
           },
           { headers }
         )
