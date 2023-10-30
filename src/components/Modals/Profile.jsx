@@ -29,6 +29,7 @@ const Profile = ({ isModal, setIsModal, logout }) => {
   };
 
   const [passwordError, setPasswordError] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
   const validationSchema = Yup.object().shape({
     password: Yup.string()
       .max(25, "비밀번호는 최대 25자리 이하여야 합니다.")
@@ -37,6 +38,12 @@ const Profile = ({ isModal, setIsModal, logout }) => {
         "알파벳, 숫자, 특수문자를 모두 포함해야 합니다!"
       )
       .required("비밀번호를 입력하세요"),
+    nickname: Yup.string()
+      .matches(
+        /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z][^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/,
+        "닉네임에 특수문자가 포함되면 안되고 숫자로 시작하면 안됩니다!"
+      )
+      .required("닉네임을 입력하세요"),
   });
 
   const [formData, setFormData] = useState(initialFormData);
@@ -47,7 +54,11 @@ const Profile = ({ isModal, setIsModal, logout }) => {
       .validate(formData, { abortEarly: false })
       .then(() => {
         axios
-          .put(`https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/auth/${userid}`, formData, { headers })
+          .put(
+            `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/auth/${userid}`,
+            formData,
+            { headers }
+          )
           .then((res) => {
             if (res.data.error) {
               alert(res.data.error);
@@ -105,6 +116,9 @@ const Profile = ({ isModal, setIsModal, logout }) => {
                     });
                   }}
                 />
+                {nicknameError && (
+                  <div className="error">{nicknameError}</div>
+                )}
               </div>
               <div className="buttons">
                 <button
