@@ -89,7 +89,7 @@ const Register = () => {
 								title: res.data,
 								showConfirmButton: false,
 								timer: 1500,
-							});
+							}); 
 							history('/auth/login');
 						}
 					})
