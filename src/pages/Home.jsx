@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post/");
+        const res = await axios.get("https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/post");
         setPosts(res.data);
       } catch (err) {
         console.log(err);
