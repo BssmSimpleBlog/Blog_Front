@@ -156,6 +156,7 @@ const Post = () => {
     }
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleDeleteComment = (id) => {
     Swal.fire({
       title: "정말 삭제하시겠습니까?",
@@ -164,6 +165,7 @@ const Post = () => {
       confirmButtonColor: "rgb(133, 243, 133)",
       cancelButtonColor: "red",
     }).then(() => {
+      setIsSubmitting(true);
       axios
         .delete(
           `https://port-0-simpleblog-euegqv2bln64bjco.sel5.cloudtype.app/comment/${id}`,
@@ -179,6 +181,9 @@ const Post = () => {
             showConfirmButton: false,
           });
           window.location.reload();
+        })
+        .finally(() => {
+          setIsSubmitting(false);
         });
     });
   };
